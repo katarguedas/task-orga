@@ -5,12 +5,15 @@ import { createContext, useContext, type Dispatch, type SetStateAction } from 'r
 interface AuthContextType  {
   isLoggedIn: boolean,
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
+  userId:string, setUserId:Dispatch<SetStateAction<string>>;
 }
 
 
 const initAuthContext = {
   isLoggedIn: false,
   setIsLoggedIn: () => { },
+  userId: "",
+  setUserId: () => { }
 }
 
 const AuthContext = createContext<AuthContextType>(initAuthContext);
@@ -20,13 +23,13 @@ const AuthContext = createContext<AuthContextType>(initAuthContext);
 
 export const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
 
-const  {isLoggedIn, setIsLoggedIn} = useAuth();
+const  {isLoggedIn, setIsLoggedIn, userId, setUserId} = useAuth();
 
 
   const num = 3;
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }} >
+    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn,userId, setUserId }} >
       {children}
     </AuthContext.Provider>
   )
@@ -34,4 +37,3 @@ const  {isLoggedIn, setIsLoggedIn} = useAuth();
 
 
 
-// export { useAuthContext };
