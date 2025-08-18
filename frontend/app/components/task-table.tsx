@@ -1,11 +1,13 @@
 import type { TopicGroup } from "app/types/TopicTypes";
 import Topic from "./topic";
+import { useEffect } from "react";
+import useData from "app/hooks/useData";
 
-type Props = {
-  data: TopicGroup[];
-}
 
-export default function TaskTable({ data }: Props) {
+
+export default function TaskTable() {
+
+  const {data} = useData();
 
 
   return (
@@ -37,8 +39,8 @@ export default function TaskTable({ data }: Props) {
         data.map((t: TopicGroup) => (
           <Topic
             key={t.id}
+            topicId={t.id}
             name={t.name}
-            tasks={t.tasks}
           />
         ))
       }

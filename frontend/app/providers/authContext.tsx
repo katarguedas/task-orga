@@ -2,10 +2,11 @@
 import useAuth from 'app/hooks/useAuth';
 import { createContext, useContext, type Dispatch, type SetStateAction } from 'react';
 
-interface AuthContextType  {
+interface AuthContextInterface {
   isLoggedIn: boolean,
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
-  userId:string, setUserId:Dispatch<SetStateAction<string>>;
+  userId: string,
+  setUserId: Dispatch<SetStateAction<string>>;
 }
 
 
@@ -16,7 +17,7 @@ const initAuthContext = {
   setUserId: () => { }
 }
 
-const AuthContext = createContext<AuthContextType>(initAuthContext);
+const AuthContext = createContext<AuthContextInterface>(initAuthContext);
 
 // const useAuthContext = useContext(AuthContext);
 

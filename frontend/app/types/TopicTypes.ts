@@ -3,7 +3,7 @@ export type Task = {
   id: string,
   name: string,
   status: string,
-  progress: number
+  progress: number | undefined
 }
 
 export type TopicGroup = {
