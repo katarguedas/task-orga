@@ -1,5 +1,5 @@
 import useData from "app/hooks/useData";
-import { createContext, type Dispatch, type SetStateAction } from "react";
+import { createContext, useContext, type Dispatch, type SetStateAction } from "react";
 import type { TopicGroup } from "app/types/TopicTypes";
 import { initData } from "app/hooks/useData";
 
@@ -27,9 +27,10 @@ const initDataContext = {
 
 const DataContext = createContext<DataContextInterface>(initDataContext);
 
+const useDataContext=()=>useContext(DataContext);
 
 
-export const DataContextProvider = ({ children }: { children: React.ReactNode }) => {
+const DataContextProvider = ({ children }: { children: React.ReactNode }) => {
 
   const { data, setData, getDataFromBackend, saveData, getData } = useData();
 
@@ -41,3 +42,4 @@ export const DataContextProvider = ({ children }: { children: React.ReactNode })
 }
 
 
+export { useDataContext, DataContextProvider };

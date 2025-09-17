@@ -1,7 +1,11 @@
-import useData from "app/hooks/useData"
+import { CiSquarePlus } from "react-icons/ci";
+
+import { useDataContext } from "app/providers/dataContext"
 import type { Task, TopicGroup } from "app/types/TopicTypes"
-import {useEffect, useRef, useState
+import {
+  useEffect, useState
 } from "react"
+import NewTask from "./new-task";
 
 type Props = {
   topicId: string,
@@ -18,22 +22,26 @@ export default function Topic({ topicId, name }: Props) {
   const [selectedRow, setSelectedRow] = useState<string>();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [item, setItem] = useState("");
-  const { data, setData, saveData } = useData();
+  const { data, setData, saveData, getData } = useDataContext();
   // const dragItem = useRef<string>("");
+  const [showInput, setShowInput] = useState(false);
 
-
-  useEffect(() => {
-    const topicIndex = data.findIndex(topic => topic.id === topicId);
-    const nTask = data[topicIndex].tasks.length;
-    const classString = "grid grid-rows-" + nTask.toString() + " auto-rows-fr whitespace-nowrap subgrid h-full "
-    setRowGridClass(classString)
-  }, [])
 
 
   useEffect(() => {
-    const topicIndex = data.findIndex(topic => topic.id === topicId);
-    setTasks(data[topicIndex].tasks);
+    if (!data) {
+      const data = getData();
+      setData(data);
+    } else {
+      const topicIndex = data.findIndex(topic => topic.id === topicId);
+      const nTask = data[topicIndex].tasks.length;
+      setTasks(data[topicIndex].tasks);
+      const classString = "grid grid-rows-" + nTask.toString() + 1 + " auto-rows-fr whitespace-nowrap subgrid h-full "
+      setRowGridClass(classString);
+    }
   }, [data])
+
+
 
   useEffect(() => {
     if (!isDragOver) {
@@ -101,17 +109,22 @@ export default function Topic({ topicId, name }: Props) {
       })
     }
 
-    const updateTopics = (topics: TopicGroup[]) => {
-      const newTopics: TopicGroup[] = topics.map((topic) => {
+    const updateTopics = () => {
+      const newTopics: TopicGroup[] = data!.map((topic) => {
         return topic.id !== topicId ? topic : { ...topic, tasks: newTasks(topic) }
       })
       return newTopics;
     }
-    const newData = updateTopics(data);
+    const newData = updateTopics();
 
     saveData(newData);
     setData(newData);
     setIsDragOver(false);
+  }
+
+
+  const handleClick = () => {
+    setShowInput(!showInput);
   }
 
 
@@ -207,6 +220,18 @@ export default function Topic({ topicId, name }: Props) {
               }
             </div>
           </div>
+          <div className="bg-neutral-100 ">
+            <CiSquarePlus
+              className=" hover:text-blue-700 h-full w-9 justify-self-center text-blue-400"
+              onClick={handleClick}
+            />
+          </div>
+
+          <NewTask
+            topicId={topicId}
+            showInput={showInput}
+            setShowInput={setShowInput}
+          />
         </>
       }
 
