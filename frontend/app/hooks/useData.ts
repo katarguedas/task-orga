@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import type { TopicGroup } from 'app/types/TopicTypes';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export const initData: TopicGroup[] = [
   {

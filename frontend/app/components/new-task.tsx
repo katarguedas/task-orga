@@ -57,7 +57,7 @@ export default function NewTask(props: Props) {
           />
         }
       </div>
-      <div className="bg-neutral-100 " ></div>
+      
     </>
   )
 }

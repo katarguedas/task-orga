@@ -5,6 +5,7 @@ import useData from "app/hooks/useData";
 import NewTopic from "./new-topic";
 import { useDataContext } from "app/providers/dataContext";
 import TableHeader from "./table-header";
+import { DragAndDropContextProvider } from "app/providers/dragAndDropContext";
 
 
 
@@ -16,24 +17,24 @@ export default function TaskTable() {
 
 
   return (
+    <DragAndDropContextProvider>
+      <div
+        id="table"
+        className="w-11/12 grid grid-cols-[1fr_4fr_1fr]  grid-flow-dense gap-1 text-center shadow-lg m-5"
+      >
+        <TableHeader />
 
-    <div
-      id="table"
-      className="w-11/12 grid grid-cols-[1fr_4fr_1fr]  grid-flow-dense gap-1 text-center shadow-lg m-5"
-    >
-      <TableHeader />
-
-      {data && data.length > 0 &&
-        data.map((t: TopicGroup) => (
+        {data && data.length > 0 &&
+          data.map((t: TopicGroup) => (
             <Topic
               key={t.id}
               topicId={t.id}
               name={t.name}
             />
-        ))
-      }
-      <NewTopic />
-    </div>
-
+          ))
+        }
+        <NewTopic />
+      </div>
+    </DragAndDropContextProvider>
   )
 }
