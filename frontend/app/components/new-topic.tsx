@@ -14,7 +14,6 @@ export default function NewTopic() {
 
   const { data, saveData, setData, getData } = useDataContext();
 
-  console.log("NEW TOPIC")
 
   const handleClick = () => {
     setShowInput(!showInput);
@@ -37,7 +36,6 @@ export default function NewTopic() {
       tasks: [],
       isCompleted: false,
     };
-    console.log("newTopic: ", newTopic);
     if (!data) {
       const dat = getData();
       setData(dat);

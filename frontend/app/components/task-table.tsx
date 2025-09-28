@@ -20,7 +20,7 @@ export default function TaskTable() {
     <DragAndDropContextProvider>
       <div
         id="table"
-        className="w-11/12 grid grid-cols-[1fr_4fr_1fr]  grid-flow-dense gap-1 text-center shadow-lg m-5"
+        className="w-11/12 grid grid-cols-[1fr_4fr_1fr] grid-flow-dense m-6 gap-0 text-center border-neutral-500 rounded-xl shadow-xl shadow-neutral-500"
       >
         <TableHeader />
 

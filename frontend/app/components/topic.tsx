@@ -1,4 +1,3 @@
-import { CiSquarePlus, CiTrash } from "react-icons/ci";
 
 import { useDataContext } from "app/providers/dataContext"
 import type { Task } from "app/types/TopicTypes"
@@ -21,11 +20,10 @@ export default function Topic({ topicId, name }: Props) {
 
   const [rowGridClass, setRowGridClass] = useState("");
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [showInput, setShowInput] = useState(false);
 
   const { data, setData, getData } = useDataContext();
 
-  const { isDragOver, item, setItem, handleDragStart, handleDragEnter, handleDragLeave, handleDragEnd, handleDragOver, handleDrop } = useDragAndDropContext();
+  const { isDragOver, setItem, handleDragStart} = useDragAndDropContext();
 
 
 
@@ -82,10 +80,8 @@ export default function Topic({ topicId, name }: Props) {
               }
             </div>
           </div>
-
           <div className="bg-yellow-100 py-1 ">
             <div className={rowGridClass}>
-
               {
                 tasks.map((task, outerIndex) => (
                   <div key={outerIndex} className=" grid grid-cols-5 subgrid ">
@@ -134,35 +130,10 @@ export default function Topic({ topicId, name }: Props) {
             </div>
           </div>
           {/* last row of the topic to add or to delete a task: */}
-          <div className="bg-neutral-100 ">
-            <CiSquarePlus
-              className=" hover:text-blue-700 hover:cursor-pointer h-full w-9 p-1 justify-self-center text-blue-400"
-              onClick={() => setShowInput(!showInput)}
-            />
-          </div>
-
           <NewTask
             topicId={topicId}
-            showInput={showInput}
-            setShowInput={setShowInput}
+            tasksLength={tasks.length}
           />
-          <div
-            id="trash"
-            className="bg-neutral-100 "
-            onDragEnter={handleDragEnter}
-            onDragLeave={handleDragLeave}
-            onDragOver={handleDragOver}
-            onDragEnd={handleDragEnd}
-            onDrop={(event) => handleDrop(event, topicId)}
-          >
-            {
-              tasks.length > 0 &&
-              <CiTrash
-                className=" hover:text-blue-700  h-full w-9 p-1 justify-self-center text-blue-400"
-              />
-            }
-
-          </div>
         </>
       }
 
